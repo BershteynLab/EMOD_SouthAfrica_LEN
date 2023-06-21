@@ -163,7 +163,7 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
       write.csv(file=paste0(root_path,"/max_prices.csv"))
 }
 
-run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_SA_NewEXE/output_2023_06_19_17_25", 
+run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_SA_NewEXE/output_2023_06_21_10_37", 
             cost_art=187, 
             life_expectancy = 66, 
             pop_scale_param_inst = pop_scale_params(year=2009,population=33868111, age_min_inc=15, age_max_inc= 64))
