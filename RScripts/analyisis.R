@@ -73,7 +73,20 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
     
   }
   
-  
+  infections_averted_by_simid = function(baseline, intervention) {
+    baseline_data = get_infections_and_py(baseline)
+    intervention_data = get_infections_and_py(intervention)
+    intervention_data$infections.averted = baseline_data$Infections - intervention_data$Infections
+    intervention_data$baseline_infections = baseline_data$Infections
+    results = intervention_data %>% 
+                filter(Year >= 2025, Year < 2045) %>%
+                group_by(sim.id) %>%
+                summarize(infections.averted=sum(infections.averted), 
+                          py_on_treatment=sum(py_on_treatment),
+                          percent_coverage=sum(py_on_treatment)/sum(py_total),
+                          percent_infections_averted = sum(infections.averted)/sum(baseline_infections))
+    results
+  }
   
   calc_max_price = function(baseline, intervention, cost_art) {
     intervention = calculate.pop_scaling_factor(intervention, 
@@ -165,6 +178,8 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
       mutate(PctCoverage=`1`/(`1`+`0`)) %>% 
       ggplot() + geom_point(aes(x=Year, y=PctCoverage))
     ggplot2::ggsave(paste0(path,"/coverage_pop.png"),plot=plt)
+    infections_averted_by_simid(baseline %>% filter(Age<50), experiment %>% filter(Age<50)) %>%
+      write.csv(file=paste0(path,"/infections_averted_by_simid.csv"))
     infections_averted_over_time(baseline %>% filter(Age<50), experiment %>% filter(Age<50)) %>% mutate(experiment = path)
   }
   
