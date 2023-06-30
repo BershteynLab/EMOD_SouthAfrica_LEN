@@ -1,0 +1,232 @@
+{
+   "Metadata": {
+      "Author": "abershteyn",
+      "DateCreated": "13-Jul-2016",
+      "IdReference": "0",
+      "NodeCount": 10,
+      "RegionName": "South Africa",
+      "Tool": "Notepad++, Matlab R2016a, Excel for MS Office 2013"
+   },
+   "Nodes": [
+      {
+         "IndividualProperties": [
+            {
+               "Property": "Known_Positive",
+               "Values": ["False", "True"],
+               "Initial_Distribution": [ 1, 0],
+               "Transitions": []
+           },
+            {
+               "Comment": "80% Healthcare Accessible",
+               "Initial_Distribution": [
+                  0.8,
+                  0.2
+               ],
+               "Property": "Accessibility",
+               "Transitions": [],
+               "Values": [
+                  "Yes",
+                  "No"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  0,
+                  1
+               ],
+               "Property": "WillDoTraditionalMC",
+               "Transitions": [],
+               "Values": [
+                  "Yes",
+                  "No"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  0,
+                  0,
+                  1
+               ],
+               "Property": "PrEPEligible",
+               "Transitions": [],
+               "Values": [
+                  "HIGH",
+                  "LOW",
+                  "NONE"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  0,
+                  1
+               ],
+               "Property": "AgeProp",
+               "Transitions": [],
+               "Values": [
+                  "OLD",
+                  "YOUNG"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  0,
+                  1
+               ],
+               "Property": "AGYW",
+               "Transitions": [],
+               "Values": [
+                  "Yes",
+                  "No"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  0,
+                  1
+               ],
+               "Property": "HAS_RELATIONSHIP",
+               "Transitions": [],
+               "Values": [
+                  "Yes",
+                  "No"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  0,
+                  1
+               ],
+               "Property": "HAS_SERODISCORDANT_RELATIONSHIP",
+               "Transitions": [],
+               "Values": [
+                  "Yes",
+                  "No"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  0.5,
+                  0.5
+               ],
+               "Property": "DividePopulationInHalf",
+               "Transitions": [],
+               "Values": [
+                  "FirstHalf",
+                  "SecondHalf"
+               ]
+            },
+	    { "Property":"ARTIneligible",
+	      "Initial_Distribution": [
+			0,
+			1
+		],
+		"Values": [
+			"Yes",
+			"No"
+		],
+		"Transitions" : []
+	    },
+            {
+               "Initial_Distribution": [
+                  0,
+                  1
+               ],
+               "Property": "OnDrug",
+               "Transitions": [],
+               "Values": [
+                  "YES",
+                  "NO"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+		  0,
+		  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+		  0,
+                  0
+               ],
+               "Property": "InterventionStatus",
+               "Transitions": [],
+               "Values": [
+                  "",
+		  "OnNonSuppressiveART",
+                  "ARTStaging",
+                  "ARTStagingDiagnosticTest",
+                  "LinkingToART",
+                  "LinkingToPreART",
+                  "OnEffectiveART",
+		  "OnART",
+		  "StoppedART",
+                  "OnPreART",
+                  "HCTTestingLoop",
+                  "HCTUptakeAtDebut",
+                  "HCTUptakePostDebut",
+                  "TestingOnANC",
+                  "TestingOnChild6w",
+                  "TestingOnSymptomatic",
+                  "LostForever"
+               ]
+            },
+            {
+               "Initial_Distribution": [
+                  0.934742856,
+                  0.06525714400000004,
+                  0
+               ],
+               "Initial_Distribution__KP_Risk_All": "<-- MARKER",
+               "Property": "Risk",
+               "Transitions": [],
+               "Values": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH"
+               ]
+            },
+            {
+               "Comment": "Received initial first year immunizations, if VaccineState yes, eligible for boosters",
+               "Initial_Distribution": [
+                  0,
+                  1
+               ],
+               "Property": "VaccineState",
+               "Transitions": [],
+               "Values": [
+                  "Yes",
+                  "No"
+               ]
+            },
+            {
+               "Comment": "Fraction of viral load strata for inidivudals on ART, national levels for South Africa 2015",
+               "Initial_Distribution": [
+                  0.778,
+                  0.037,
+                  0.123,
+                  0.062
+               ],
+               "Property": "FractionViralLoadStrataOnART",
+               "Transitions": [],
+               "Values": [
+                  "ViralLoad0to399",
+                  "ViralLoad400to999",
+                  "ViralLoad1000to9999",
+                  "ViralLoad10000toInfinity"
+               ]
+            }
+         ],
+         "NodeID": 1
+      }
+   ]
+}
