@@ -16,6 +16,12 @@
                "Initial_Distribution": [ 1, 0],
                "Transitions": []
            },
+           {
+            "Property": "VOICE6",
+            "Values": ["FALSE", "TRUE"],
+            "Initial_Distribution": [ 1, 0],
+            "Transitions": []
+            },
             {
                "Comment": "80% Healthcare Accessible",
                "Initial_Distribution": [

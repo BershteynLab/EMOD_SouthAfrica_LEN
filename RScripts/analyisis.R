@@ -1,5 +1,7 @@
 library(purrr)
 library(rsample)
+library(slurmR)
+library(EMODAnalyzeR)
 
 #run_report will output two csvs
 run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst) {
@@ -120,12 +122,12 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
                    discounted_py = sum(discounted_py),
                    on_art_averted = sum(on_art_averted),
                    undiscounted_py = sum(py_on_treatment)) %>% 
-        bootstraps( times = 500)
+        bootstraps( times = 500 )
     resamples <- map_dfr(bootstraps$splits, function(.data) {.data %>% analysis() %>% summary_fun()} )
     summary <- rbind(      resamples %>% summarize_all(function(data) {quantile(data, 0.5)}) %>% mutate(aggregation = "Median"),
                            resamples %>% summarize_all(function(data) {quantile(data, 0.025)}) %>% mutate(aggregation = "Lower Bound (95% CI)"),
                            resamples %>% summarize_all(function(data) {quantile(data, 0.975)}) %>% mutate(aggregation = "Upper Bound (95% CI)"))
-    summary        
+    summary
   }
   
   calc_coverage = function(intervention) {
@@ -161,6 +163,8 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
                                                 reference_population = pop_scale_param_inst$population,
                                                 age_max_inclusive = pop_scale_param_inst$age_max_inc,
                                                 age_min_inclusive = pop_scale_param_inst$age_min_inc)
+    
+    # plot coverage over time
     plt = experiment %>% 
       filter(Gender==1, Age < 50) %>% 
       group_by(Year, HasIntervention.PrEP, sim.id) %>% 
@@ -170,6 +174,7 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
       ggplot() + geom_point(aes(x=Year, y=PctCoverage))
     ggplot2::ggsave(paste0(path,"/coverage_women.png"),plot=plt)
     
+    # same as above, but include men
     plt = experiment %>% 
       filter( Age < 50) %>% 
       group_by(Year, HasIntervention.PrEP, sim.id) %>% 
@@ -178,10 +183,17 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
       mutate(PctCoverage=`1`/(`1`+`0`)) %>% 
       ggplot() + geom_point(aes(x=Year, y=PctCoverage))
     ggplot2::ggsave(paste0(path,"/coverage_pop.png"),plot=plt)
+    
+    
     infections_averted_by_simid(baseline %>% filter(Age<50), experiment %>% filter(Age<50)) %>%
       write.csv(file=paste0(path,"/infections_averted_by_simid.csv"))
+    
+    # not sure if necessary for our current (2023-06-26) analysis
     infections_averted_over_time(baseline %>% filter(Age<50), experiment %>% filter(Age<50)) %>% mutate(experiment = path)
   }
+  
+  # ABOVE THIS LINE is functions that we will call
+  # BELOW is the "main" script
   
   EMODAnalyzeR::bigpurple.add_slurm_to_path()
   bigpurple_opts = list(partition = "a100_short", time = "12:00:00")
@@ -226,7 +238,7 @@ run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_SA_NewEXE/
             cost_art=187, 
             life_expectancy = 66, 
             pop_scale_param_inst = pop_scale_params(year=2009,population=33868111, age_min_inc=15, age_max_inc= 64))
-run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_Nyanza_gates_len/output_consolidated", 
+run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_Nyanza_gates_len/output_2023_06_23_15_24", 
             cost_art=193, 
             life_expectancy = 70,
             pop_scale_param_inst = pop_scale_params(year=2009, population=2891150, age_min_inc = 15, age_max_inc = 64))
