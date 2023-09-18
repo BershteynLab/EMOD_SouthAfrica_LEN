@@ -81,7 +81,7 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
     intervention_data$infections.averted = baseline_data$Infections - intervention_data$Infections
     intervention_data$baseline_infections = baseline_data$Infections
     results = intervention_data %>% 
-                filter(Year >= 2025, Year < 2045) %>%
+                filter(Year >= 2025, Year < 2036) %>%
                 group_by(sim.id) %>%
                 summarize(infections.averted=sum(infections.averted), 
                           py_on_treatment=sum(py_on_treatment),
@@ -234,15 +234,15 @@ run_report = function(root_path, cost_art, life_expectancy, pop_scale_param_inst
       write.csv(file=paste0(root_path,"/max_prices.csv"))
 }
 
-run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_SA_NewEXE/output_2023_06_21_14_20", 
+run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_SA_NewEXE/output_2023_08_03_12_14", 
             cost_art=187, 
             life_expectancy = 66, 
             pop_scale_param_inst = pop_scale_params(year=2009,population=33868111, age_min_inc=15, age_max_inc= 64))
-run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_Nyanza_gates_len/output_2023_06_23_15_24", 
+run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_Nyanza_gates_len/output_2023_08_10_17_59", 
             cost_art=193, 
             life_expectancy = 70,
             pop_scale_param_inst = pop_scale_params(year=2009, population=2891150, age_min_inc = 15, age_max_inc = 64))
-run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_Zimbabwe_NewEXE/output_2023_06_22_04_04", 
+run_report( root_path = "/gpfs/data/bershteynlab/EMOD/kaftad01/202306_Zimbabwe_NewEXE/output_2023_08_03_16_17", 
             cost_art=94, 
             life_expectancy = 66,
             pop_scale_param_inst = pop_scale_params(year=2020, population=9140126, age_min_inc = 15, age_max_inc=64))
